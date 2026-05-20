@@ -491,9 +491,7 @@ navigator.clipboard.writeText(link);
 alert('Link copiado ❤️');
 }
 
-function mostrarCadastro(){
-
-    function mostrarLandingPage(){
+function mostrarLandingPage(){
 
 document.getElementById('app').innerHTML = `
 
@@ -542,43 +540,45 @@ document.getElementById('app').innerHTML = `
 `;
 }
 
-    document.getElementById('app').innerHTML = `
-    
-    <div class="card">
+function mostrarCadastro(){
 
-        <h1 class="title">LoveLink</h1>
+document.getElementById('app').innerHTML = `
 
-        <p class="subtitle">
-            Crie páginas românticas para casais ❤️
-        </p>
+<div class="card">
 
-        <div class="grid">
+    <h1 class="title">LoveLink</h1>
 
-            <input type="text" id="nome1" placeholder="Nome da pessoa 1">
+    <p class="subtitle">
+        Crie páginas românticas para casais ❤️
+    </p>
 
-            <input type="text" id="nome2" placeholder="Nome da pessoa 2">
+    <div class="grid">
 
-            <input type="text" id="slug" placeholder="Slug personalizado">
+        <input type="text" id="nome1" placeholder="Nome da pessoa 1">
 
-            <input type="date" id="data">
+        <input type="text" id="nome2" placeholder="Nome da pessoa 2">
 
-        </div>
+        <input type="text" id="slug" placeholder="Slug personalizado">
 
-        <textarea id="frase" placeholder="Digite uma frase especial"></textarea>
-
-        <button onclick="gerarJSON()">
-            Gerar Cadastro
-        </button>
-
-        <div class="json-box">
-
-            <textarea id="jsonOutput" readonly></textarea>
-
-        </div>
+        <input type="date" id="data">
 
     </div>
-    
-    `;
+
+    <textarea id="frase" placeholder="Digite uma frase especial"></textarea>
+
+    <button onclick="gerarJSON()">
+        Gerar Cadastro
+    </button>
+
+    <div class="json-box">
+
+        <textarea id="jsonOutput" readonly></textarea>
+
+    </div>
+
+</div>
+
+`;
 }
 
 function gerarJSON(){
