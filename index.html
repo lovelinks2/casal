@@ -16,6 +16,7 @@
 }
 
 body{
+    padding-bottom:120px;
     min-height:100dvh;
     background:linear-gradient(135deg,#050505,#18001f,#32003d);
     color:white;
@@ -24,6 +25,17 @@ body{
     align-items:center;
     padding:20px;
     flex-direction: column;
+}
+
+@media (min-width: 768px){
+
+body{
+    padding-bottom:160px;
+}
+
+.floating-contact{
+    bottom:40px;
+}
 }
 
 .container{
@@ -117,6 +129,56 @@ button:hover{
 
 .preview{
     text-align:center;
+}
+
+.floating-contact{
+
+position:fixed;
+
+bottom:30px;
+left:50%;
+
+transform:translateX(-50%);
+
+z-index:999;
+
+width:calc(100% - 40px);
+max-width:700px;
+
+padding:16px;
+
+border-radius:18px;
+
+text-align:center;
+
+text-decoration:none;
+
+color:white;
+
+font-weight:bold;
+
+font-size:1rem;
+
+background:
+linear-gradient(
+    90deg,
+    #ff4fd8,
+    #8b5cff
+);
+
+box-shadow:
+0 0 25px rgba(255,0,200,0.22);
+
+backdrop-filter:blur(10px);
+
+transition:0.3s;
+}
+
+.floating-contact:hover{
+
+transform:
+translateX(-50%)
+scale(1.02);
 }
 
 .slider{
@@ -731,6 +793,14 @@ let fotoAtual = 0;
 
         </div>
         
+<a
+    href="https://wa.me/5521976962190?text=Oi,%20quero%20um%20LoveLink%20💜"
+    target="_blank"
+    class="floating-contact"
+>
+    💜 Quero um LoveLink
+</a>
+
         `;
 
         document.getElementById('fotoCasal').onerror = function(){
