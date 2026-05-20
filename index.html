@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>LoveLink</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    min-height:100dvh;
+    background:linear-gradient(135deg,#050505,#18001f,#32003d);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    flex-direction: column;
+}
+
+.container{
+    width:100%;
+    max-width:700px;
+}
+
+.card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 25px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 30px rgba(255,0,255,0.1);
+    width: 100%;
+    overflow: hidden;
+    background-image:
+    linear-gradient(
+    rgba(15, 0, 20, 0.671),
+    rgba(8, 0, 10, 0.774)
+),
+url('./fotos/fundo-coracoes.png');
+background-size: cover;
+background-position: center;
+}
+
+.title{
+    text-align:center;
+    font-size:2.7rem;
+    margin-bottom:10px;
+    color:#ff8cf8;
+}
+
+.subtitle{
+    text-align:center;
+    color:#dcbfff;
+    margin-bottom:30px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+@media(max-width:700px){
+    .grid{
+        grid-template-columns:1fr;
+    }
+}
+
+input,
+textarea{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:rgba(255,255,255,0.07);
+    color:white;
+    border:1px solid rgba(255,255,255,0.06);
+}
+
+input::placeholder,
+textarea::placeholder{
+    color:#ccc;
+}
+
+textarea{
+    resize:none;
+    height:120px;
+    margin-top:15px;
+}
+
+button{
+    width:100%;
+    margin-top:20px;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:1rem;
+    font-weight:bold;
+    color:white;
+    background:linear-gradient(90deg,#ff00cc,#7b2cff);
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.02);
+}
+
+.preview{
+    text-align:center;
+}
+
+.slider{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    width:100%;
+    max-width:260px;
+    margin:0 auto 20px auto;
+}
+
+.slider img{
+
+
+    position:relative;
+    z-index:1;
+    opacity:1;
+
+    transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+
+    transform:scale(1);
+    
+    width:100%;
+    height:260px;
+
+    object-fit:cover;
+
+    border-radius:100%;
+
+    border:4px solid #fcfcfc1e;
+
+    box-shadow:
+    0 0 25px rgba(255, 108, 255, 0.35);
+
+    transition:0.5s;
+
+    cursor:pointer;
+}
+
+.arrow{
+    z-index:20;
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+
+    width:36px;
+    height:36px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,0.12);
+
+    border:1px solid rgba(255,255,255,0.1);
+
+    color:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    cursor:pointer;
+
+    backdrop-filter:blur(10px);
+
+    transition:0.3s;
+
+    user-select:none;
+}
+
+.arrow:hover{
+    background:rgba(255,255,255,0.2);
+}
+
+.arrow.left{
+    left:-10px;
+}
+
+.arrow.right{
+    right:-10px;
+}
+
+.fullscreen{
+    position:fixed;
+    inset:0;
+
+    background:black;
+
+    display:none;
+
+    justify-content:center;
+    align-items:center;
+
+    z-index:9999;
+}
+
+.fullscreen img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.close-full{
+    position:absolute;
+
+    top:20px;
+    left:20px;
+
+    font-size:2rem;
+
+    color:white;
+
+    z-index:10000;
+
+    cursor:pointer;
+
+    background:rgba(0,0,0,0.5);
+
+    width:50px;
+    height:50px;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.music-arrow{
+
+position:absolute;
+
+left:45px;
+
+bottom:177px;
+
+font-size:2.2rem;
+
+color:white;
+
+opacity:0.75;
+
+animation:musicArrow 1s infinite;
+
+pointer-events:none;
+}
+
+@keyframes musicArrow{
+
+0%{
+    transform:translateY(0);
+}
+
+50%{
+    transform:translateY(10px);
+}
+
+100%{
+    transform:translateY(0);
+}
+}
+
+.copy-btn{
+    margin-top:20px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.12);
+    color:#ffdfff;
+    padding:14px 18px;
+    border-radius:14px;
+    cursor:pointer;
+    font-size:1rem;
+    font-weight:bold;
+    transition:0.3s;
+
+    backdrop-filter:blur(10px);
+
+    box-shadow:
+        0 0 15px rgba(255,108,255,0.15);
+}
+
+.copy-btn:hover{
+    transform:scale(1.03);
+
+    background:rgba(255,255,255,0.12);
+
+    box-shadow:
+        0 0 20px rgba(255,108,255,0.25);
+}
+
+
+.contact-btn{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width: 100%;
+    max-width: 700px;
+    margin-top:15px;
+    padding:15px;
+
+    border-radius:14px;
+
+    text-decoration:none;
+
+    color:white;
+    font-weight:bold;
+
+    background:
+    linear-gradient(
+        90deg,
+        #ff4fd8,
+        #8b5cff
+    );
+
+    transition:0.3s;
+
+    box-shadow:
+    0 0 20px rgba(255,0,200,0.18);
+}
+
+.contact-btn:hover{
+
+    transform:scale(1.02);
+
+    box-shadow:
+    0 0 25px rgba(255,0,200,0.28);
+}
+
+.love-title{
+    font-size:2rem;
+    margin-bottom:10px;
+    color:#ffb0ff;
+}
+
+@media(max-width:429px){
+
+.love-title{
+    font-size:1.4rem;
+}
+
+}
+
+.counter{
+    margin-top:10px;
+    color:#ffd8ff;
+    font-size:1.1rem;
+}
+
+.frase{
+    margin-top:20px;
+    font-style:italic;
+    color:#eee;
+    line-height:1.7;
+}
+
+audio{
+    width:100%;
+    margin-top:25px;
+}
+
+.route{
+    margin-top:20px;
+    color:#ff8cf8;
+    font-weight:bold;
+    word-break:break-all;
+}
+
+.json-box{
+    margin-top:25px;
+}
+
+.json-box textarea{
+    height:220px;
+}
+
+.not-found{
+    text-align:center;
+    font-size:1.4rem;
+    color:#ffb6ff;
+}
+
+</style>
+</head>
+<body>
+    
+<div class="container" id="app"></div>
+
+<script>
+
+function calcularTempo(dataInicio){
+
+    const inicio = new Date(dataInicio);
+    const hoje = new Date();
+
+    let anos = hoje.getFullYear() - inicio.getFullYear();
+    let meses = hoje.getMonth() - inicio.getMonth();
+    let dias = hoje.getDate() - inicio.getDate();
+
+    if(dias < 0){
+
+        meses--;
+
+        const ultimoMes = new Date(
+            hoje.getFullYear(),
+            hoje.getMonth(),
+            0
+        );
+
+        dias += ultimoMes.getDate();
+    }
+
+    if(meses < 0){
+
+        anos--;
+
+        meses += 12;
+    }
+
+    const partes = [];
+
+    if(anos > 0){
+
+        partes.push(
+            anos === 1
+            ? '1 ano'
+            : `${anos} anos`
+        );
+    }
+
+    if(meses > 0){
+
+        partes.push(
+            meses === 1
+            ? '1 mês'
+            : `${meses} meses`
+        );
+    }
+
+    if(dias > 0){
+
+        partes.push(
+            dias === 1
+            ? '1 dia'
+            : `${dias} dias`
+        );
+    }
+
+    if(partes.length === 0){
+
+        return 'Hoje ❤️';
+    }
+
+    if(partes.length === 1){
+
+return partes[0];
+}
+
+if(partes.length === 2){
+
+return `${partes[0]} e ${partes[1]}`;
+}
+
+return `${partes.slice(0, -1).join(', ')} e ${partes[partes.length - 1]}`;
+
+}
+
+function copiarLink(link){
+
+navigator.clipboard.writeText(link);
+
+alert('Link copiado ❤️');
+}
+
+function mostrarCadastro(){
+
+    document.getElementById('app').innerHTML = `
+    
+    <div class="card">
+
+        <h1 class="title">LoveLink</h1>
+
+        <p class="subtitle">
+            Crie páginas românticas para casais ❤️
+        </p>
+
+        <div class="grid">
+
+            <input type="text" id="nome1" placeholder="Nome da pessoa 1">
+
+            <input type="text" id="nome2" placeholder="Nome da pessoa 2">
+
+            <input type="text" id="slug" placeholder="Slug personalizado">
+
+            <input type="date" id="data">
+
+        </div>
+
+        <textarea id="frase" placeholder="Digite uma frase especial"></textarea>
+
+        <button onclick="gerarJSON()">
+            Gerar Cadastro
+        </button>
+
+        <div class="json-box">
+
+            <textarea id="jsonOutput" readonly></textarea>
+
+        </div>
+
+    </div>
+    
+    `;
+}
+
+function gerarJSON(){
+
+    const nome1 = document.getElementById('nome1').value.trim();
+    const nome2 = document.getElementById('nome2').value.trim();
+    const slug = document.getElementById('slug').value.trim();
+    const data = document.getElementById('data').value;
+    const frase = document.getElementById('frase').value.trim();
+
+    if(!nome1 || !nome2 || !slug || !data || !frase){
+
+        alert('Preencha todos os campos.');
+        return;
+    }
+
+    const dados = {
+        slug,
+        nome1,
+        nome2,
+        frase,
+        data
+    };
+
+    document.getElementById('jsonOutput').value =
+        JSON.stringify(dados, null, 2);
+}
+
+async function carregarCasal(){
+
+    const params = new URLSearchParams(window.location.search);
+
+    const slug = params.get('slug');
+
+    const urlFinal = `${window.location.origin}/lovelink/?slug=${slug}`;
+
+    if(!slug){
+
+        mostrarCadastro();
+        return;
+    }
+
+    try{
+
+        const response = await fetch('casais.json');
+
+        const casais = await response.json();
+
+        const casal = casais.find(c => c.slug === slug);
+
+        if(!casal){
+
+            document.getElementById('app').innerHTML = `
+                <div class="card">
+                    <div class="not-found">
+                        Casal não encontrado 💔
+                    </div>
+                </div>
+            `;
+
+            return;
+        }
+
+        const fotos = [
+    `fotos/foto01-${slug}.png`,
+    `fotos/foto02-${slug}.png`,
+    `fotos/foto03-${slug}.png`
+];
+
+let fotoAtual = 0;
+
+        const musicaPath = `musicas/musica-${slug}.mp3`;
+
+        document.getElementById('app').innerHTML = `
+        
+        <div class="card">
+
+            <div class="preview">
+
+                <div class="slider">
+
+    <div class="arrow left" onclick="fotoAnterior()">
+        ❮
+    </div>
+
+    <img
+        id="fotoCasal"
+        src=""
+        alt="Foto do casal"
+        onclick="abrirFullscreen()"
+    >
+
+    <div class="arrow right" onclick="proximaFoto()">
+        ❯
+    </div>
+
+</div>
+
+<div class="fullscreen" id="fullscreen">
+
+    <div class="close-full" onclick="fecharFullscreen()">
+        ←
+    </div>
+
+    <img id="fullscreenImg">
+
+</div>
+
+                <div class="love-title">
+                    ${casal.nome1} 💘 ${casal.nome2}
+                </div>
+
+                <div class="counter" id="contador"></div>
+
+                <div class="frase">
+                    “${casal.frase}”
+                </div>
+
+                <audio
+    id="audioPlayer"
+    controls
+    autoplay
+    loop
+>
+                    <source src="${musicaPath}" type="audio/mpeg">
+                </audio>
+
+                <div class="music-arrow" id="musicArrow">
+    ↓
+</div>
+
+                <button class="copy-btn" onclick="copiarLink('${urlFinal}')">
+    📋          Copiar Link
+                </button>
+
+            </div>
+
+        </div>
+        
+        `;
+
+        document.getElementById('fotoCasal').onerror = function(){
+            this.src = `fotos/foto-${slug}.jpg`;
+        };
+
+        function atualizarContador(){
+
+            document.getElementById('contador').innerHTML =
+                `Juntos há ${calcularTempo(casal.data)}`;
+        }
+
+        atualizarContador();
+
+        setInterval(atualizarContador,1000);
+
+        const fotoElemento = document.getElementById('fotoCasal');
+
+function atualizarFoto(){
+
+    fotoElemento.style.opacity = 0;
+
+    fotoElemento.style.transform = 'scale(0.97)';
+
+    setTimeout(()=>{
+
+        fotoElemento.src = fotos[fotoAtual];
+
+        document.getElementById('fullscreenImg').src =
+        fotos[fotoAtual];
+
+        fotoElemento.style.opacity = 1;
+
+        fotoElemento.style.transform = 'scale(1)';
+
+    },200);
+
+}
+
+window.proximaFoto = function(){
+
+    fotoAtual++;
+
+    if(fotoAtual >= fotos.length){
+        fotoAtual = 0;
+    }
+
+    resetarIntervalo();
+
+    atualizarFoto();
+}
+
+window.fotoAnterior = function(){
+
+    fotoAtual--;
+
+    if(fotoAtual < 0){
+        fotoAtual = fotos.length - 1;
+    }
+
+    resetarIntervalo();
+
+    atualizarFoto();
+}
+
+function resetarIntervalo(){
+
+clearInterval(sliderInterval);
+
+sliderInterval = setInterval(proximaFoto,6000);
+}
+
+let sliderInterval = setInterval(proximaFoto,6000);
+
+window.abrirFullscreen = function(){
+
+    clearInterval(sliderInterval);
+
+    document.getElementById('fullscreen').style.display =
+    'flex';
+
+    document.getElementById('fullscreenImg').src =
+    fotos[fotoAtual];
+}
+
+window.fecharFullscreen = function(){
+
+    document.getElementById('fullscreen').style.display =
+    'none';
+
+    resetarIntervalo();
+}
+
+
+
+atualizarFoto();
+
+const audio = document.getElementById('audioPlayer');
+
+audio.addEventListener('play', ()=>{
+
+    const seta = document.getElementById('musicArrow');
+
+    if(seta){
+
+        seta.style.display = 'none';
+    }
+});
+
+    }catch(error){
+
+        console.error(error);
+
+        document.getElementById('app').innerHTML = `
+            <div class="card">
+                <div class="not-found">
+                    Erro ao carregar o sistema.
+                </div>
+            </div>
+        `;
+    }
+}
+
+carregarCasal();
+
+</script>
+
+<a
+    href="https://wa.me/5521976962190?text=Oi,%20quero%20um%20LoveLink%20💜"
+    target="_blank"
+    class="contact-btn"
+>
+    💜 Quero um LoveLink
+</a>
+
+</body>
+</html>
