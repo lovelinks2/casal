@@ -493,6 +493,55 @@ alert('Link copiado ❤️');
 
 function mostrarCadastro(){
 
+    function mostrarLandingPage(){
+
+document.getElementById('app').innerHTML = `
+
+<div class="card preview">
+
+    <h1 class="title">
+        O presente mais emocionante ❤️
+    </h1>
+
+    <p class="subtitle">
+        Crie uma página personalizada com:
+        música, fotos, contador e QR Code.
+    </p>
+
+    <img
+        src="./fotos/print1.png"
+        style="
+            width:100%;
+            border-radius:20px;
+            margin-top:20px;
+            border:1px solid rgba(255,255,255,0.08);
+        "
+    >
+
+    <img
+        src="./fotos/print2.png"
+        style="
+            width:100%;
+            border-radius:20px;
+            margin-top:20px;
+            border:1px solid rgba(255,255,255,0.08);
+        "
+    >
+
+    <a
+        href="https://wa.me/5521976962190?text=Oi,%20quero%20um%20LoveLink%20💜"
+        target="_blank"
+        class="contact-btn"
+        style="margin-top:25px;"
+    >
+        💜 Quero meu LoveLink
+    </a>
+
+</div>
+
+`;
+}
+
     document.getElementById('app').innerHTML = `
     
     <div class="card">
@@ -568,8 +617,21 @@ async function carregarCasal(){
 
     if(!slug){
 
+        const isLocalhost =
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1';
+
+    if(isLocalhost){
+
         mostrarCadastro();
-        return;
+
+    }else{
+
+        mostrarLandingPage();
+    }
+
+    return;
+
     }
 
     try{
