@@ -16,7 +16,6 @@
 }
 
 body{
-    padding-bottom:120px;
     min-height:100dvh;
     background:linear-gradient(135deg,#050505,#18001f,#32003d);
     color:white;
@@ -41,6 +40,11 @@ body{
 .container{
     width:100%;
     max-width:700px;
+}
+
+#container-btns {
+    display: flex;
+    flex-direction: column;
 }
 
 .card {
@@ -150,13 +154,11 @@ padding:16px;
 border-radius:18px;
 
 text-align:center;
-
 text-decoration:none;
 
 color:white;
 
 font-weight:bold;
-
 font-size:1rem;
 
 background:
@@ -172,6 +174,37 @@ box-shadow:
 backdrop-filter:blur(10px);
 
 transition:0.3s;
+}
+
+.floating-contact:hover{
+
+transform:
+translateX(-50%)
+scale(1.02);
+}
+
+
+/* MOBILE */
+@media(max-width:700px){
+
+.floating-contact{
+
+    position:relative;
+
+    left:auto;
+    bottom:auto;
+
+    transform:none;
+
+    width:100%;
+
+    margin-top:20px;
+}
+
+.floating-contact:hover{
+
+    transform:none;
+}
 }
 
 .floating-contact:hover{
@@ -315,7 +348,7 @@ position:absolute;
 
 left:45px;
 
-bottom:177px;
+bottom:250px;
 
 font-size:2.2rem;
 
@@ -784,22 +817,26 @@ let fotoAtual = 0;
                 <div class="music-arrow" id="musicArrow">
     ↓
 </div>
-
+            <div id="container-btns">
                 <button class="copy-btn" onclick="copiarLink('${urlFinal}')">
     📋          Copiar Link
                 </button>
+
+
+                            <a
+                href="https://wa.me/5521976962190?text=Oi,%20quero%20um%20LoveLink%20💜"
+                target="_blank"
+                class="floating-contact"
+            >
+                💜 Quero um LoveLink
+            </a>
+            </div>
 
             </div>
 
         </div>
         
-<a
-    href="https://wa.me/5521976962190?text=Oi,%20quero%20um%20LoveLink%20💜"
-    target="_blank"
-    class="floating-contact"
->
-    💜 Quero um LoveLink
-</a>
+
 
         `;
 
